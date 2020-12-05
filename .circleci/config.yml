@@ -3,9 +3,13 @@ executors:
   my-executor:
     docker:
       - image: cimg/ruby:2.7.1-node
+    environment:
+      BUNDLE_PATH: vendor/bundle
 jobs:
   build:
     executor: my-executor
+    environment:
+      RAILS_ENV: production
     steps:
       - run: echo Hello world
 # version: 2
