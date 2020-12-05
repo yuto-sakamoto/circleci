@@ -1,9 +1,19 @@
-version: 2
+version: 2.1
+executors:
+  my-executor:
+    docker:
+      - image: cimg/ruby:2.7.1-node
 jobs:
   build:
-    docker:
-      - image: cimg/node:lts
+    executor: my-executor
     steps:
-      - checkout
-      - run: yarn install
-      - run: yarn test
+      - run: echo Hello world
+# version: 2
+# jobs:
+#   build:
+#     docker:
+#       - image: cimg/node:lts
+#     steps:
+#       - checkout
+#       - run: yarn install
+#       - run: yarn test
