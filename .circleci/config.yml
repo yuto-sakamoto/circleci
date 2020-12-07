@@ -2,23 +2,25 @@ version: 2.1
 commands:
   say-hello:
     steps:
-      - run sayhello
+      - run echo sayhello world
 
-executors:
-  my-executor:
-    docker:
-      - image: cimg/ruby:2.7.1-node
-    environment:
-      BUNDLE_PATH: vendor/bundle
+# executors:
+#   my-executor:
+#     docker:
+#       - image: cimg/ruby:2.7.1-node
+#     environment:
+#       BUNDLE_PATH: vendor/bundle
 
 jobs:
   build:
-    executor: my-executor
-    environment:
-      RAILS_ENV: production
+    docker:
+      - image: cimg/ruby:2.7.1-node
+    # executor: my-executor
+    # environment:
+    #   RAILS_ENV: production
     steps:
       - say-hello
-      - run: echo Hello world
+      # - run: echo Hello world
 # version: 2
 # jobs:
 #   build:
