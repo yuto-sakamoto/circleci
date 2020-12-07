@@ -1,8 +1,13 @@
 version: 2.1
 commands:
-  say-hello:
+  sayhello:
+    description: "HELLO WORLD"
+    parameters:
+      to:
+        type: string
+        default: "world"
     steps:
-      - run echo sayhello world
+      - run: echo sayhello world << parameters.to >>
 
 # executors:
 #   my-executor:
@@ -19,7 +24,8 @@ jobs:
     # environment:
     #   RAILS_ENV: production
     steps:
-      - say-hello
+      - sayhello:
+        to: Everyone
       # - run: echo Hello world
 # version: 2
 # jobs:
