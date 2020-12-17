@@ -17,16 +17,16 @@ commands:
 #       BUNDLE_PATH: vendor/bundle
 
 jobs:
-  build:
-    docker:
-      - image: cimg/ruby:2.7.1-node
-    # executor: my-executor
-    # environment:
-    #   RAILS_ENV: production
-    steps:
-      - sayhello:
-        to: Everyone
-      # - run: echo Hello world
+  # build:
+  #   docker:
+  #     - image: cimg/ruby:2.7.1-node
+  #   # executor: my-executor
+  #   # environment:
+  #   #   RAILS_ENV: production
+  #   steps:
+  #     - sayhello:
+  #       to: Everyone
+  #     # - run: echo Hello world
 
   deploy:
     docker:
@@ -47,11 +47,11 @@ workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - build
+      # - build
       - hold-test:
         type: approval
         requires:
-          - build
+          # - build
       - deploy:
           requires:
             - hold-test
