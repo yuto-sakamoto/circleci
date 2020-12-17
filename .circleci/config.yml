@@ -53,6 +53,6 @@ workflows:
         requires:
           - build
       - deploy:
-        requires:
-          - hold-test
+          requires:
+            - hold-test
 
