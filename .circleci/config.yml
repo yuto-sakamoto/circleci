@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 # commands:
 #   sayhello:
 #     description: "HELLO WORLD"
@@ -49,9 +49,9 @@ workflows:
     jobs:
       - build
       - hold-test:
-        type: approval
-        requires:
-          - build
+          type: approval
+          requires:
+            - build
       - deploy:
           requires:
             - hold-test
