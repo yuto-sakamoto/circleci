@@ -1,7 +1,69 @@
-version: 2
+version: 2.1
+# commands:
+#   sayhello:
+#     description: "HELLO WORLD"
+#     parameters:
+#       to:
+#         type: string
+#         default: "world"
+#     steps:
+#       - run: echo sayhello world << parameters.to >>
+
+# executors:
+#   my-executor:
+#     docker:
+#       - image: cimg/ruby:2.7.1-node
+#     environment:
+#       BUNDLE_PATH: vendor/bundle
+
 jobs:
   build:
     docker:
-      - image: cimg/node:lts
+      - image: cimg/ruby:2.7.1-node
+    # executor: my-executor
+    # environment:
+    #   RAILS_ENV: production
     steps:
-      - run: echo "hello world test"
+      # - sayhello:
+        # to: Everyone
+      - run: echo Hello world
+      - run:
+          name: CircleCIのビルドイン環境変数の利用
+          command: |
+            echo "CI is '$CI'"
+            echo "CIRCLE_SHA1 is '$CIRCLE_SHA1'"
+            echo "CIRCLE_BRANCH is '$CIRCLE_BRANCH'"
+            echo "CIRCLE_PROJECT_REPONAME IS '$CIRCLE_PROJECT_REPONAME'"
+            echo "CIRCLE_TAG is '$CIRCLE_TAG'"
+            echo "CIRCLE_NODE_TOTAL is '$CIRCLE_NODE_TOTAL'"
+            echo "CIRCLE_NODE_INDEX is '$CIRCLE_NODE_INDEX'"
+
+
+  deploy:
+    docker:
+      - image: busybox
+    steps:
+      - run: echo "deploy job"
+# version: 2
+# jobs:
+#   build:
+#     docker:
+#       - image: cimg/node:lts
+#     steps:
+#       - checkout
+#       - run: yarn install
+#       - run: yarn test
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - hold-test:
+          type: approval
+          requires:
+            - build
+      - deploy:
+          requires:
+            - hold-test
+
